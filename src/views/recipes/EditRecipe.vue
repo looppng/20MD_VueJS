@@ -44,12 +44,8 @@ export default {
     }
   },
   methods: {
-    handleSubmit() {
-      console.log('Form Submitted')
-    },
-
     getRecipeData(id) {
-      fetch(`http://localhost:3000/recipes/${id}/edit`).then((res) => {
+      fetch(`http://localhost:3000/recipes/${id}`).then((res) => {
         console.log(res)
       })
     },

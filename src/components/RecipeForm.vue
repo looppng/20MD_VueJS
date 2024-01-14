@@ -1,5 +1,5 @@
 <template>
-  <form id="form" @submit.prevent="handleSubmit">
+  <form id="form" @submit="handleSubmit">
     <div>
       <label for="author">Recipe Author:</label>
       <input
@@ -40,6 +40,8 @@
 </template>
 
 <script>
+import { toast } from 'vue3-toastify'
+
 export default {
   name: 'CreateRecipe',
   data() {
@@ -59,18 +61,24 @@ export default {
       console.log('Form Submitted')
     },
     saveRecipe() {
-      fetch('http://localhost:3000/recipes', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(this.model.recipe)
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log('Recipe added successfully:', data)
+      if (confirm('Are you sure you entered all correctly?')) {
+        fetch('http://localhost:3000/recipes', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(this.model.recipe)
         })
-        .catch((err) => console.log(err.message))
+          .then((res) => res.json())
+          .then((data) => {
+            console.log('Recipe added successfully:', data)
+            toast.success('Recipe added successfully!', {
+              autoClose: 1500,
+              position: toast.POSITION.TOP_LEFT
+            })
+          })
+          .catch((err) => console.log(err.message))
+      }
     }
   }
 }
