@@ -1,0 +1,8 @@
+{
+  "recipes": [
+    { "id": 1, "author": "Sally", "time": "1h 30min", "description": "Spaghetti code" },
+    { "id": 2, "author": "Molly", "time": "30min", "description": "Cup cakes" },
+    { "id": 3, "author": "Jamie", "time": "1h", "description": "Pelmeni" },
+    { "id": 4, "author": "Johnny", "time": "2h", "description": "Bologna" }
+  ]
+}

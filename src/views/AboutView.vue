@@ -1,15 +1,17 @@
+<script setup lang="ts"></script>
+
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div class="container">
+    <h1 class="heading">About Us</h1>
   </div>
 </template>
 
 <style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
+.heading {
+  margin: 25px 0 15px;
+  font-size: 2em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
 }
 </style>
