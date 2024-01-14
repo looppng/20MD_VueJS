@@ -1,29 +1,18 @@
 <template>
-  <form id="form" @submit.prevent="handleSubmit">
+  <form id="form" @submit.prevent="saveRecipe">
     <div>
       <label for="author">Recipe Author:</label>
-      <input
-        v-model="model.recipe.author"
-        type="text"
-        id="author"
-        placeholder="What is your name..."
-        required
-      />
+      <input v-model="model.recipe.author" type="text" id="author" required />
     </div>
 
     <div>
       <label for="time">Prep & Cooking time:</label>
-      <input v-model="model.recipe.time" type="text" id="time" placeholder="1h 30min" required />
+      <input v-model="model.recipe.time" type="text" id="time" required />
     </div>
 
     <div>
       <label for="description">Cooking Process description:</label>
-      <textarea
-        v-model="model.recipe.description"
-        id="description"
-        placeholder="Be sure to include ingredients and step by step method"
-        required
-      />
+      <textarea v-model="model.recipe.description" id="description" required />
     </div>
 
     <div>
@@ -41,7 +30,7 @@
 
 <script>
 export default {
-  name: 'CreateRecipe',
+  name: 'EditRecipe',
   data() {
     return {
       model: {
@@ -58,9 +47,16 @@ export default {
     handleSubmit() {
       console.log('Form Submitted')
     },
+
+    getRecipeData(id) {
+      fetch(`http://localhost:3000/recipes/${id}/edit`).then((res) => {
+        console.log(res)
+      })
+    },
+
     saveRecipe() {
-      fetch('http://localhost:3000/recipes', {
-        method: 'POST',
+      fetch(`http://localhost:3000/recipes/${id}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -68,7 +64,7 @@ export default {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log('Recipe added successfully:', data)
+          console.log('Recipe updated successfully:', data)
         })
         .catch((err) => console.log(err.message))
     }

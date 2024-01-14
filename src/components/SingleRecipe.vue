@@ -5,6 +5,7 @@
       <h4>{{ recipe.author }}</h4>
       <h5>{{ recipe.time }}</h5>
       <p class="paragraph">{{ recipe.description }}</p>
+      <p>{{ recipe.difficulty }}</p>
     </div>
     <div v-else-if="error">
       <p>Error: {{ error }}</p>

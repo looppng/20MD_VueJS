@@ -6,7 +6,14 @@
         <h4>{{ recipe.author }}</h4>
         <h5>{{ recipe.time }}</h5>
         <p class="paragraph">{{ recipe.description }}</p>
+        <p>{{ recipe.difficulty }}</p>
       </router-link>
+      <div class="action">
+        <router-link :to="{ path: '/recipes/' + recipe.id + '/edit' }" class="btn btn-info"
+          >Edit</router-link
+        >
+        <Button type="button" @click="deleteRecipe(recipe)" class="btn btn-danger"> Delete </Button>
+      </div>
     </div>
   </section>
 </template>
@@ -23,8 +30,18 @@ export default {
       .then((res) => res.json())
       .then((data) => (this.recipes = data))
       .catch((err) => console.log(err.message))
+  },
+  methods: {
+    deleteRecipe() {
+      console.log(recipe.id)
+    }
   }
 }
 </script>
 
-<style></style>
+<style>
+.action {
+  display: flex;
+  gap: 1rem;
+}
+</style>

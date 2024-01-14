@@ -13,6 +13,8 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
     "json-server": "^1.0.0-alpha.21",
     "vue": "^3.3.11",
     "vue-router": "^4.2.5"
