@@ -1,5 +1,5 @@
 <template>
-  <form id="form" @submit="handleSubmit">
+  <form id="form" @submit.prevent="saveRecipe">
     <div>
       <label for="author">Recipe Author:</label>
       <input
@@ -35,7 +35,7 @@
       </select>
     </div>
 
-    <button class="btn btn-primary mt-3" @click="saveRecipe">Add Recipe</button>
+    <button class="btn btn-primary mt-3">Add Recipe</button>
   </form>
 </template>
 
@@ -43,7 +43,7 @@
 import { toast } from 'vue3-toastify'
 
 export default {
-  name: 'CreateRecipe',
+  name: 'RecipeForm',
   data() {
     return {
       model: {
@@ -57,27 +57,34 @@ export default {
     }
   },
   methods: {
-    handleSubmit() {
-      console.log('Form Submitted')
-    },
-    saveRecipe() {
-      if (confirm('Are you sure you entered all correctly?')) {
-        fetch('http://localhost:3000/recipes', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(this.model.recipe)
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log('Recipe added successfully:', data)
-            toast.success('Recipe added successfully!', {
-              autoClose: 1500,
-              position: toast.POSITION.TOP_LEFT
-            })
+    async saveRecipe() {
+      try {
+        if (confirm('Are you sure you entered everything correctly?')) {
+          const response = await fetch('http://localhost:3000/recipes', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.model.recipe)
           })
-          .catch((err) => console.log(err.message))
+
+          if (!response.ok) {
+            throw new Error('Failed to add recipe')
+          }
+
+          await response.json()
+
+          toast.success('Recipe created successfully!', {
+            autoClose: 1500,
+            position: 'top-left'
+          })
+
+          setTimeout(() => {
+            this.$router.push('/recipes')
+          }, 1500)
+        }
+      } catch (error) {
+        console.error(error.message)
       }
     }
   }

@@ -24,11 +24,13 @@
       </select>
     </div>
 
-    <button class="btn btn-primary mt-3" @click="saveRecipe">Add Recipe</button>
+    <button class="btn btn-info mt-3">Save</button>
   </form>
 </template>
 
 <script>
+import { toast } from 'vue3-toastify'
+
 export default {
   name: 'EditRecipe',
   data() {
@@ -40,29 +42,49 @@ export default {
           description: '',
           difficulty: ''
         }
-      }
+      },
+      id: null
     }
+  },
+  mounted() {
+    this.id = this.$route.params.id
+    this.getRecipeData(this.id)
   },
   methods: {
     getRecipeData(id) {
-      fetch(`http://localhost:3000/recipes/${id}`).then((res) => {
-        console.log(res)
-      })
+      fetch(`http://localhost:3000/recipes/${id}`)
+        .then((res) => {
+          return res.json()
+        })
+        .then((data) => {
+          this.model.recipe = data
+        })
     },
-
     saveRecipe() {
+      const id = this.$route.params.id
+
       fetch(`http://localhost:3000/recipes/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(this.model.recipe)
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log('Recipe updated successfully:', data)
+      }).then((res) => {
+        if (!res.ok) {
+          throw Error(`Failed to update recipe with id ${id}`)
+        }
+
+        toast.success('Recipe updated successfully!', {
+          autoClose: 1500,
+          position: 'top-left'
         })
-        .catch((err) => console.log(err.message))
+
+        setTimeout(() => {
+          this.$router.push('/recipes')
+        }, 1500)
+
+        return res.json()
+      })
     }
   }
 }

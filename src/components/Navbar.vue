@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg bg-light container">
+  <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
       <button
         class="navbar-toggler"
@@ -22,6 +22,9 @@
           </li>
           <li class="nav-item">
             <router-link to="/recipes" class="nav-link">Recipes</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/create" class="nav-link">Create</router-link>
           </li>
         </ul>
       </div>

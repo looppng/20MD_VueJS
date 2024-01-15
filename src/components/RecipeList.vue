@@ -1,11 +1,7 @@
 <template>
   <section class="container">
     <h3 class="heading">Available Recipes:</h3>
-    <div class="image">
-      <img src="#" alt="image" />
-    </div>
     <div v-for="recipe in recipes" :key="recipe.id" class="mt-2 mb-4">
-      <div class="image"></div>
       <router-link :to="{ name: 'recipe', params: { id: recipe.id } }" class="nav-link">
         <h4>{{ recipe.author }}</h4>
         <h5>{{ recipe.time }}</h5>
@@ -42,6 +38,7 @@ export default {
         .then((data) => (this.recipes = data))
         .catch((err) => console.error(err.message))
     },
+
     deleteRecipe(recipeId) {
       if (confirm('Are you sure you want to delete this recipe?')) {
         fetch(`http://localhost:3000/recipes/${recipeId}`, {

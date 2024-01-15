@@ -5,6 +5,7 @@ import AboutView from '@/views/AboutView.vue'
 import RecipeDetailsView from '@/views/recipes/RecipeDetailsView.vue'
 import NotFound from '@/views/NotFound.vue'
 import EditRecipe from '@/views/recipes/EditRecipe.vue'
+import CreateView from '@/views/recipes/CreateView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,6 +30,11 @@ const router = createRouter({
       name: 'recipe',
       component: RecipeDetailsView,
       props: true
+    },
+    {
+      path: '/create',
+      name: 'create',
+      component: CreateView
     },
     {
       path: '/:catchAll(.*)',
