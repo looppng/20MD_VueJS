@@ -1,12 +1,23 @@
 <template>
   <form id="form" @submit.prevent="saveRecipe">
     <div>
-      <label for="author">Recipe Author:</label>
+      <label for="recipe">Recipe name:</label>
+      <input
+        v-model="model.recipe.recipe"
+        type="text"
+        id="recipe"
+        placeholder="What is the name of recipe"
+        required
+      />
+    </div>
+
+    <div>
+      <label for="author">Recipe author:</label>
       <input
         v-model="model.recipe.author"
         type="text"
         id="author"
-        placeholder="What is your name..."
+        placeholder="What is the name of author"
         required
       />
     </div>
@@ -27,6 +38,17 @@
     </div>
 
     <div>
+      <label for="image">Image url:</label>
+      <input
+        v-model="model.recipe.image"
+        type="text"
+        id="image"
+        placeholder="Image url..."
+        required
+      />
+    </div>
+
+    <div>
       <label>Difficulty:</label>
       <select v-model="model.recipe.difficulty">
         <option value="easy">Easy</option>
@@ -35,58 +57,55 @@
       </select>
     </div>
 
-    <button class="btn btn-primary mt-3">Add Recipe</button>
+    <button class="btn btn-success mt-3">Add Recipe</button>
   </form>
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref } from 'vue'
 import { toast } from 'vue3-toastify'
+import { useRouter } from 'vue-router'
+import type { IRecipe } from '@/interfaces/interfaces'
 
-export default {
-  name: 'RecipeForm',
-  data() {
-    return {
-      model: {
-        recipe: {
-          author: '',
-          time: '',
-          description: '',
-          difficulty: ''
-        }
+const model = ref<IRecipe>({
+  recipe: {
+    author: '',
+    time: '',
+    description: '',
+    difficulty: '',
+    recipe: '',
+    image: ''
+  }
+})
+const router = useRouter()
+const saveRecipe = async () => {
+  try {
+    if (confirm('Are you sure you entered everything correctly?')) {
+      const response = await fetch('http://localhost:3000/recipes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(model.value.recipe)
+      })
+
+      if (!response.ok) {
+        console.log('Failed to add this recipe')
       }
+
+      await response.json()
+
+      toast.success('Recipe created successfully!', {
+        autoClose: 1500,
+        position: 'top-left'
+      })
+
+      setTimeout(() => {
+        router.push('/recipes')
+      }, 1500)
     }
-  },
-  methods: {
-    async saveRecipe() {
-      try {
-        if (confirm('Are you sure you entered everything correctly?')) {
-          const response = await fetch('http://localhost:3000/recipes', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(this.model.recipe)
-          })
-
-          if (!response.ok) {
-            throw new Error('Failed to add recipe')
-          }
-
-          await response.json()
-
-          toast.success('Recipe created successfully!', {
-            autoClose: 1500,
-            position: 'top-left'
-          })
-
-          setTimeout(() => {
-            this.$router.push('/recipes')
-          }, 1500)
-        }
-      } catch (error) {
-        console.error(error.message)
-      }
-    }
+  } catch (error: any) {
+    console.error(error.message)
   }
 }
 </script>
@@ -95,17 +114,17 @@ export default {
 form {
   max-width: 420px;
   margin: 32px auto;
-  background: #f0f0f0;
+  background: #424242;
   text-align: left;
   padding: 40px;
   border-radius: 10px;
 }
 
 label {
-  color: #aaa;
+  color: #f2f2f2;
   display: inline-block;
   margin: 25px 0 15px;
-  font-size: 0.6em;
+  font-size: 0.8em;
   text-transform: uppercase;
   letter-spacing: 1px;
   font-weight: bold;
@@ -121,5 +140,6 @@ select {
   border: none;
   border-bottom: 1px solid #ddd;
   color: #555;
+  background: #e8f1f0;
 }
 </style>

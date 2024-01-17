@@ -1,6 +1,10 @@
 <template>
-  <nav class="navbar navbar-expand-lg bg-light">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
+      <router-link to="/">
+        <img src="../assets/navlogo.svg" alt="Logo" class="logo" />
+      </router-link>
+
       <button
         class="navbar-toggler"
         type="button"
@@ -12,8 +16,8 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
+      <div class="collapse navbar-collapse navWrapper" id="navbarNav">
+        <ul class="navbar-nav nav-items">
           <li class="nav-item">
             <router-link to="/" class="nav-link">Home</router-link>
           </li>
@@ -34,4 +38,23 @@
 
 <script setup lang="ts"></script>
 
-<style></style>
+<style scoped>
+.navWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  height: 24px;
+}
+
+.nav-item {
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.nav-item:hover {
+  border-bottom: 1px solid white;
+}
+</style>

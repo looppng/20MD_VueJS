@@ -1,7 +1,12 @@
 <template>
   <form id="form" @submit.prevent="saveRecipe">
     <div>
-      <label for="author">Recipe Author:</label>
+      <label for="recipe">Recipe name:</label>
+      <input v-model="model.recipe.recipe" type="text" id="recipe" required />
+    </div>
+
+    <div>
+      <label for="author">Author name:</label>
       <input v-model="model.recipe.author" type="text" id="author" required />
     </div>
 
@@ -13,6 +18,11 @@
     <div>
       <label for="description">Cooking Process description:</label>
       <textarea v-model="model.recipe.description" id="description" required />
+    </div>
+
+    <div>
+      <label for="image">Image url:</label>
+      <input v-model="model.recipe.image" type="text" id="image" required />
     </div>
 
     <div>
@@ -40,7 +50,9 @@ export default {
           author: '',
           time: '',
           description: '',
-          difficulty: ''
+          difficulty: '',
+          image: '',
+          recipe: ''
         }
       },
       id: null

@@ -2,12 +2,6 @@
   <RecipeList />
 </template>
 
-<script>
+<script setup lang="ts">
 import RecipeList from '@/components/RecipeList.vue'
-export default {
-  name: 'RecipeView',
-  components: { RecipeList }
-}
 </script>
-
-<style></style>

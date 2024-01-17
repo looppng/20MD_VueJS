@@ -2,12 +2,8 @@
   <SingleRecipe :id="id" />
 </template>
 
-<script>
+<script setup lang="ts">
 import SingleRecipe from '@/components/SingleRecipe.vue'
 
-export default {
-  name: 'RecipeDetailsView',
-  components: { SingleRecipe },
-  props: ['id']
-}
+defineProps(['id'])
 </script>
